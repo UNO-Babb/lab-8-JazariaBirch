@@ -4,6 +4,31 @@
 #Assignment:
 
 import random
+def makeID(first, last, num):
+  while len(last) < 5:
+    last = last + "xxxxxx"
+    last = last[0:5]
+
+  last3 = num[-3:]
+
+  id = first[0] + last +last3
+  return id
+def makeMajorYear(major,year):
+  majorAbb = major[0:3]
+  year = year.upper()
+  yearAbb = "UN"
+  if year == "FRESHMAN":
+    yearAbb = "FR" 
+  elif year == "SOPHOMORE":
+    yearAbb = "SO"
+  elif year == "JUNIOR":
+    yearAbb = "JR"
+  elif year == "SENIOR":
+    yearAbb = "SR"
+
+  majorYear = majorAbb +","+ yearAbb
+
+  return majorYear
 
 def main():
 
@@ -12,8 +37,19 @@ def main():
   outFile = open("StudentList.csv", 'w')
 
   #Process each line of the input file and output to the CSV file
+  for student in inFile:
+    #student = "Antwan Dougherty AntwanDougherty@yahoo.com 443-13-3556 03/28/1996 Freshman Philosophy"
+    studentData = student.split()
+    firstName = studentData[0]
+    lastName = studentData[1]
+    studentID = studentData[2]
+    year = studentData[5]
+    major = studentData[6]
+    userID = makeID(firstName, lastName, studentID)
+    majorYear = makeMajorYear(major, year)
 
-
+    studentOutput = lastName +","+ firstName +","+ userID +","+ majorYear + "\n"
+    outFile.write(studentOutput)
 
   #Close files in the end to save and ensure they are not damaged.
   inFile.close()
